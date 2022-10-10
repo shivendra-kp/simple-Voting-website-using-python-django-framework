@@ -1,0 +1,79 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<div class="home-container">
+    <div class="section-A">
+        <div style="min-height: 20px;"></div>
+        <div>
+            {% if page == 'home' %}
+            <button class="section-heading-container-active" onclick="location.href='{% url 'voter-home' %}'">Home
+            </button>
+            {% else %}
+            <button class="section-heading-container" onclick="location.href='{% url 'voter-home' %}'">Home
+            </button>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if page == 'edit' %}
+
+            <button class="section-heading-container-active" onclick="location.href='{% url 'voter-edit' %}'">Edit
+                Profile</button>
+            {% else %}
+
+            <button class="section-heading-container" onclick="location.href='{% url 'voter-edit' %}'">Edit
+                Profile</button>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if page == 'news' %}
+            <button class="section-heading-container-active"
+                onclick="location.href='{% url 'voter-news' %}'">News</button>
+            {% else %}
+            <button class="section-heading-container" onclick="location.href='{% url 'voter-news' %}'">News</button>
+            {% endif %}
+
+        </div>
+
+        <!-- <div>
+            {% if page == 'election-results' %}
+            <button class="section-heading-container-active" onclick="">Election Results</button>
+            {% else %}
+            <button class="section-heading-container" onclick="">Election Results</button>
+            {% endif %}
+        </div> -->
+
+        <button class="section-heading-container" onclick="location.href='{% url 'logout' %}'">Logout</button>
+    </div>
+    <div class="section-B">
+        {%if home %}
+        <div>
+            {%if userdata.registration_status == 'approved'%}
+            {%include 'base/running_elections.html' with elections=elections voted=voted%}
+            {%elif userdata.registration_status == 'pending'%}
+            <h2>Your Verification is Pending </h2>
+            {%else%}
+            <h2>Please Apply for Voter Registration and Verification</h2>
+            <div>
+                {%if userdata.registration_status == 'na' or userdata is None %}
+                <a href="{% url 'verification-form' %}" class="btn btn-fill">Apply for Registration</a>
+                {%endif%}
+            </div>
+
+            {%endif%}
+        </div>
+        {%endif%}
+
+        {% block data%}
+        {%endblock data%}
+
+    </div>
+
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div style="min-height: 150px;"></div>
+<div class="centre-container">
+    <div class="card form-signup-card">
+        <div class="centre-container">
+            <div>
+                <h1 class="form-heading">Sign up</h1>
+                <form method="POST" name="VoterSignupInfo" class="form-base">
+                    {% csrf_token %}
+                    {{form.as_p}}
+
+                    {%if error != ''%}
+                    <div class="error-message"> {{error}} </div>
+                    {% endif %}
+
+                    <div class="centre-container">
+                        <input type="submit" value="SignUp" class="btn btn-fill" />
+                        <span style="min-width: 12px;"></span>
+                        <button class="btn btn-border" onclick="location.href='{% url 'voter-login'%}' "
+                            form="">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="min-height: 150px;"></div>
+{% endblock content %}

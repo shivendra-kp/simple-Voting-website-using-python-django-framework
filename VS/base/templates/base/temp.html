@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vote India</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}" />
+</head>
+
+<style>
+    .btn-fill-hover {
+        background-color: var(--primary-color-accent1);
+        border-color: var(--primary-color-accent1);
+    }
+
+    .btn-fill-active {
+        background-color: var(--primary-color-accent2);
+        border-color: var(--primary-color-accent1);
+    }
+
+    .btn-border-hover {
+        background-color: var(--primary-color-accent3);
+    }
+
+    .btn-border-active {
+        background-color: var(--primary-color-accent1);
+        color: white;
+    }
+
+    .code-text {
+        font: ;
+    }
+</style>
+
+
+<body class="main-container">
+    <div style="padding: 10px;">
+        <br>
+        <h1>BUTTONS</h1>
+        <div>
+            <button class="btn btn-fill">Normal</button>
+            <button class="btn btn-fill btn-fill-hover">Hovered</button>
+            <button class="btn btn-fill btn-fill-active">Clicked</button>
+            <button class="btn btn-fill" disabled>Disabled</button>
+        </div>
+
+        <div>
+            <button class="btn btn-border">Normal</button>
+            <button class="btn btn-border btn-border-hover">Hovered</button>
+            <button class="btn btn-border btn-border-active">Clicked</button>
+        </div>
+        <div>
+            <button class="btn btn-fillr btn-danger">Danger</button>
+        </div>
+        <div style="height: 25px;"></div>
+        <hr>
+
+        <h1>TABLES</h1>
+        <div style="padding-left: 2%; padding-right:50%;">
+
+
+            <table>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                </tr>
+                <tr>
+                    <td>A1</td>
+                    <td>B1</td>
+                    <td>C1</td>
+                </tr>
+                <tr>
+                    <td>A2</td>
+                    <td>B2</td>
+                    <td>C2</td>
+                </tr>
+                <tr>
+                    <td>A3</td>
+                    <td>B3</td>
+                    <td>C3</td>
+                </tr>
+                <tr>
+                    <td>A4</td>
+                    <td>B4</td>
+                    <td>C4</td>
+                </tr>
+                <tr>
+                    <td>A5</td>
+                    <td>B6</td>
+                    <td>C7</td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="height: 25px;"></div>
+        <hr>
+
+        <h1> . CARDS</h1>
+        <div style="background-color: rgb(31, 31, 31); padding-top: 50px; padding-bottom: 50px;">
+            <div class="card feature-card"></div>
+        </div>
+
+        <div style="height: 25px;"></div>
+        <hr>
+
+        <h1> . FORMS</h1>
+        <div
+            style="background-color: rgb(31, 31, 31); padding-left: 5% ; padding-right: 60%; padding-top: 50px; padding-bottom: 50px; ">
+            <div class="card">
+                <h2 class="form-heading">Heading</h2>
+                <form action="" class="form-base">
+                    <p>
+                        <label for="">Text Field</label>
+                        <input type="text" name="" id="" placeholder="Your Value Here">
+                    </p>
+                    <p>
+                        <label for="">Password Field</label>
+                        <input type="password" name="" id="" placeholder="Your Password Here">
+                    </p>
+                    <p>
+                        <label for="">File Field</label>
+                        <input type="file" name="" id="" placeholder="Your Value Here">
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <h1>Blockchain Code</h1>
+
+        <h2>blocks.py</h2>
+        <div style="background-color: rgb(205, 205, 205); padding-left: 20px;">
+            <pre class="code-text">
+import time
+from backend.utils.crypto_hash import crypto_hash
+from backend.utils.hex_to_binary import hex_to_binary
+from backend.config import MINE_RATE
+
+GENESIS_DATA = {
+    'timestamp' : 1,
+    'last_hash' : 'genesis_last_hash',
+    'hash' : 'genesis_hash',
+    'data' : [],
+    'difficulty' : 3,
+    'nonce' : 'genesis_nonce'
+}
+
+
+
+class Block:
+    """
+    Block : Unit of storage.
+    store vote of person
+    """
+    def __init__(self, timestamp, last_hash, hash, data,difficulty,nonce):
+        self.timestamp = timestamp
+        self.last_hash = last_hash
+        self.hash = hash
+        self.data = data
+        self.difficulty = difficulty
+        self.nonce = nonce
+
+    
+    def __repr__(self) -> str:
+        return (
+            'Block('
+            f'timestamp: {self.timestamp}, '
+            f'last_hash: {self.last_hash}, '
+            f'hash: {self.hash}, '
+            f'data: {self.data}, '
+            f'difficulty: {self.difficulty}, '
+            f'nonce: {self.nonce})'
+        )
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+    def to_json(self):
+        """
+        Serialize the block into dictionary representation
+        """
+        return self.__dict__
+
+    @staticmethod
+    def mine_block(last_block,data):
+        """
+        Mine a block based on the given last_block and data, until a block hash
+        is found that meets the leading 0's proof of work
+        """
+        timestamp = time.time_ns()
+        last_hash = last_block.hash
+        difficulty = Block.adjust_difficulty(last_block,timestamp)
+        nonce = 0
+        hash = crypto_hash(timestamp, last_hash, data, difficulty, nonce)
+
+        while hex_to_binary(hash)[0:difficulty] != '0' * difficulty:
+            nonce += 1
+            timestamp = time.time_ns()
+            difficulty = Block.adjust_difficulty(last_block,timestamp)
+            hash = crypto_hash(timestamp, last_hash, data, difficulty, nonce)
+
+        return Block(timestamp ,last_hash, hash, data, difficulty, nonce)
+
+    @staticmethod
+    def genesis():
+        """
+        Generate the genesis block
+        """
+        return Block(**GENESIS_DATA)
+    
+    @staticmethod
+    def from_json(block_json):
+        """
+        Deserialize the json representation back into a block instance.
+        """
+        return Block(**block_json)
+    
+    @staticmethod
+    def adjust_difficulty(last_block, new_timestamp):
+        """
+        Calculate the adjusted difficulty according to MINE_RATE.
+        Increase the difficulty for quickly mined blocks.
+        Decrease the difficulty for slowly mined blocks.
+        """
+
+        if (new_timestamp - last_block.timestamp) < MINE_RATE:
+            return last_block.difficulty + 1
+        
+        if (last_block.difficulty -1) > 0:
+            return last_block.difficulty -1
+        
+        return 1
+    
+    @staticmethod
+    def is_valid_block(last_block,block):
+        """
+        validate block by enforcing the following rules:
+            -the block must have proper last_hash reference
+            -the block must meet proper proof of work requirent
+            -the difficulty only adjust by 1
+            -the block hash must be valid combination of block fields 
+        """
+        if block.last_hash != last_block.hash:
+            raise Exception('The block last_hash must be correct')
+        
+        print("\n\n**************************************\n")
+
+        print("\n\n**************************************\n")
+
+
+        if hex_to_binary(block.hash)[0:block.difficulty] != '0' * block.difficulty:
+            raise Exception('The proof of work requirement was not met')
+        
+        if abs(block.difficulty - last_block.difficulty) > 1:
+            raise Exception('The block difficulty must only adjust by 1')
+        
+        reconstructed_hash = crypto_hash(block.timestamp, block.last_hash, block.data, block.difficulty, block.nonce)
+
+        if block.hash != reconstructed_hash:
+            raise Exception('The block hash must be correct')
+
+
+
+def main():
+    genesis_block = Block.genesis()
+    bad_block = Block.mine_block(genesis_block,'foo')
+    bad_block.data = 'evil_data'
+
+    try:
+        Block.is_valid_block(genesis_block,bad_block)
+    except Exception as e:
+        print(f'is_valid_block: {e}')
+
+if __name__ == '__main__':
+    main()
+            </pre>
+        </div>
+
+
+        <div style="height: 300px;"></div>
+    </div>
+</body>
+
+
+</html>

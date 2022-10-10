@@ -1,0 +1,28 @@
+{% extends 'super/admin_home.html' %}
+
+{% block data %}
+
+<h2>Pending list</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Adhaar Number</th>
+        <th>Actions</th>
+    </tr>
+    {%for voter in voters%}
+    <tr>
+        <td>
+            {{voter.first_name}} {{voter.last_name}}
+        </td>
+        <td>{{voter.adhaar_number}}</td>
+        <td>
+            <button onclick="location.href='{% url 'approve-voter' voter.id %}'" class="btn btn-fill">Approve</button>
+            <button onclick="location.href='{% url 'deny-voter' voter.id %}'"
+                class="btn btn-fill btn-danger">Deny</button>
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+
+{% endblock data %}

@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="navbar">
+    <div>
+        <a href="/">
+            <img class="logo" src="{% static 'images/VoteIndiaLogo.png' %}">
+        </a>
+    </div>
+
+    <div class="login-card">
+        {% if request.session.usermeta != None %}
+        <div>
+            <img src="{{request.session.usermeta.profile_pic_url}}" width="50" height="50" style="border-radius: 50%;">
+        </div>
+        <div style="min-width: 5px;"></div>
+        <div>
+            <div style="min-height: 10px;"></div>
+            <div style="font-size: 18px; color: white;">{{request.session.usermeta.username}}</div>
+            <div style=" min-height: 5px; "></div>
+            <div style="font-size: 12px;color: white;">{{request.session.usermeta.vid}}</div>
+        </div>
+        {%else%}
+        <div>
+            <img src="{% static 'images/default_user.png' %}" width="55" height="55" style="border-radius: 50%;">
+        </div>
+        <div style="min-width: 10px;"></div>
+
+        {%endif%}
+
+    </div>
+</div>

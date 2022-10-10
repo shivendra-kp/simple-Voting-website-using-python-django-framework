@@ -1,0 +1,36 @@
+{%load customfilter %}
+
+<div>
+    <h3>Avalaible Elections </h3>
+    {%if elections%}
+    {%for election in elections %}
+    <div class="card election-card">
+        <div id="election-card-heading">{{election.name}}</div>
+        <div align="right">
+            {%if election.status == 'running'%}
+
+            {% if voted|get_dict_value:election.id %}
+            <div class="election-card-message">Already Voted</div>
+            {% else %}
+            <button onclick="location.href='{% url 'cast-vote' election.id %}'" class="btn btn-border">Vote Now</button>
+            {%endif%}
+
+            {%elif election.status == 'idle' %}
+            <div class="election-card-message">Voting not Started</div>
+            {%elif election.status == 'finished' %}
+            <div class="election-card-message">Voting Finished</div>
+            {%elif election.status == 'published' %}
+            <button onclick="location.href='{% url 'view-results' election.id %}'" class="btn btn-border">View
+                Results</button>
+            {%endif%}
+        </div>
+    </div>
+    <div style="padding: 10px 0px 0px 0px;"></div>
+    {%endfor%}
+
+
+    {%else%}
+    <h3>No Active elections</h3>
+    {%endif%}
+
+</div>

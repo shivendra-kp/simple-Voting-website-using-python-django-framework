@@ -1,0 +1,104 @@
+<!-- To be included in admin_home.html-->
+
+<div>
+
+    <h2>Elections</h2>
+    <div>
+        {% if elections|length == 0 %}
+        No elections found
+        {% else %}
+        <div>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                    <th>Results</th>
+                    <th>Manage</th>
+                </tr>
+                {%for election in elections %}
+                <tr>
+                    <td>{{election.name}}</td>
+                    <td>{{election.status}}</td>
+                    <td class="table-buttons">
+                        {% if election.status == 'idle' %}
+                        <button class="btn btn-fill" onclick="location.href='{% url 'start-election' election.id %}' "
+                            title="Start Election">
+                            Start
+                        </button>
+                        <button class="btn btn-fill" disabled>End</button>
+
+                        {% elif election.status == 'running' %}
+                        <button class="btn btn-fill" disabled> Start </button>
+                        <button class="btn btn-fill" onclick="location.href='{% url 'end-election' election.id %}'">
+                            End</button>
+                        {% else %}
+                        <button class="btn btn-fill" disabled>Start</button>
+                        <button class="btn btn-fill" disabled>End</button>
+                        {% endif %}
+
+                    </td>
+                    <td class="table-buttons">
+                        {% if election.status == 'running' %}
+                        <button class="btn btn-fill"
+                            onclick="location.href='{% url 'view-election' election.id %}'">View</button>
+                        <button class="btn btn-fill" disabled>Publish</button>
+                        {%elif election.status == 'finished'%}
+                        <button class="btn btn-fill"
+                            onclick="location.href='{% url 'view-election' election.id %}'">View</button>
+
+                        <button class="btn btn-fill"
+                            onclick="location.href='{% url 'publish-election' election.id %}'">Publish</button>
+                        {%elif election.status == 'idle'%}
+                        <button class="btn btn-fill" disabled>View</button>
+                        <button class="btn btn-fill" disabled>Publish</button>
+                        {%else%}
+                        <button class="btn btn-fill"
+                            onclick="location.href='{% url 'view-election' election.id %}'">View</button>
+                        <button class="btn btn-fill" disabled>Publish</button>
+
+                        {%endif%}
+                    </td>
+                    <td class="table-buttons">
+                        {%if election.status == 'hidden' %}
+                        <button class="btn btn-fill" onclick="location.href='{% url 'make-public' election.id %}'">Make
+                            Public</button>
+                        {%else%}
+                        <button class="btn btn-fill" disabled>Make Public</button>
+                        {%endif%}
+
+                        {%if election.status == 'idle' or election.status == 'hidden'%}
+                        <button class="btn btn-fill"
+                            onclick="location.href='{% url 'edit-election' election.id %}'">Edit</button>
+                        {%else%}
+                        <button class="btn btn-fill" disabled>Edit</button>
+                        {%endif%}
+
+                        {%if election.status == 'running'%}
+                        <button class="btn btn-fill" disabled>Delete</button>
+                        {%else %}
+                        <button class="btn btn-fill btn-danger"
+                            onclick="location.href='{% url 'delete-election' election.id %}'">Delete</button>
+
+                        {%endif%}
+
+                        {%if election.status == 'published'%}
+                        <button class="btn btn-fill"
+                            onclick="location.href='{% url 'archive-election' election.id %}'">Archive</button>
+                        {%else %}
+                        <button class="btn btn-fill" disabled>Archive</button>
+                        {%endif%}
+
+
+                    </td>
+                </tr>
+                {%endfor%}
+            </table>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>

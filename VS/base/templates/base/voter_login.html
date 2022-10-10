@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div style="min-height: 150px;"></div>
+<div class="centre-container">
+    <div class="card form-login-card">
+        <div class="centre-container">
+            <div>
+                <h1 class="form-heading">Login</h1>
+                <form method="POST" name="VoterLoginInfo" class="form-base form-login">
+
+                    {% csrf_token %}
+                    <p>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your Username">
+                    </p>
+                    <p>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your Password">
+                    </p>
+                    <div class="error-message">{{error}}</div>
+                    <div class="centre-container">
+                        <input type="submit" value="Login" class="btn btn-fill" />
+                        <span style="min-width: 12px;"></span>
+                        <button class="btn btn-border" onclick="location.href='{% url 'voter-signup'%}'"
+                            form="">SignUp</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

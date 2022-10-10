@@ -1,0 +1,21 @@
+{% extends 'super/admin_home.html' %}
+
+{% block data %}
+
+<div>
+    <h2>Edit Party</h2>
+
+    <form action="" method="POST" enctype="multipart/form-data" class="form-base">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <div class="centre-container">
+            <span>
+                <input type="submit" value="Save" class="btn btn-fill">
+            </span>
+        </div>
+    </form>
+
+</div>
+
+{% endblock data %}

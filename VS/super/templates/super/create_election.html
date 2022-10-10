@@ -1,0 +1,25 @@
+{% extends 'super/admin_home.html' %}
+
+{% block data %}
+<div>
+    <h2>Create New Election</h2>
+    <div>
+
+        <form action="" method="POST" enctype="multipart/form-data" class="form-base">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="centre-container">
+                <span>
+                    <input type="submit" value="Save" class="btn btn-fill">
+                </span>
+                <span>
+                    <button type="button" onclick="javascript:history.go(-1);" class="btn btn-border">Back</button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <hr>
+
+</div>
+
+{% endblock data %}

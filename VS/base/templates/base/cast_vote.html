@@ -1,0 +1,30 @@
+{% extends 'base/voter_home.html' %}
+
+{% block data %}
+
+<div>
+    <h2>Cast your vote for {{election.name}} </h2>
+    <h4>Constituency- {{region.name}}, {{region.state}} </h4>
+
+    <table>
+        <tr>
+            <th>Party-logo</th>
+            <th>Party</th>
+            <th>Candidate</th>
+            <th>Action</th>
+
+        </tr>
+        {%for candidate in candidates%}
+        <tr>
+            <td> <img src="{{candidate.party.party_logo.url}}" width="50" height="50"></td>
+            <td>{{candidate.party.name}}</td>
+            <td>{{candidate.name}}</td>
+            <td><button onclick="location.href='{% url 'on-cast-vote' election.id candidate.id %}' "
+                    class="btn btn-fill">Cast Vote</button></td>
+        </tr>
+        {%endfor%}
+    </table>
+
+</div>
+
+{% endblock data %}

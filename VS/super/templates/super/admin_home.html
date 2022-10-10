@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+
+<style>
+
+</style>
+
+{% block content %}
+
+
+<div class="home-container">
+    <div class="section-A">
+        <h1 style="color: white;">Admin Panel</h1>
+
+        {%if page == 'home' %}
+        <div>
+            <button class="section-heading-container-active"
+                onclick="location.href='{% url 'admin-home' %}'">Home</button>
+        </div>
+        {% else %}
+        <div>
+            <button class="section-heading-container" onclick="location.href='{% url 'admin-home' %}'">Home</button>
+        </div>
+        {%endif%}
+
+        {%if page == 'create-election' %}
+        <div>
+            <button class="section-heading-container-active"
+                onclick="location.href='{% url 'create-election' %}'">Create New Election</button>
+        </div>
+        {% else %}
+        <div>
+            <button class="section-heading-container" onclick="location.href='{% url 'create-election' %}'">Create New
+                Election</button>
+        </div>
+        {%endif%}
+
+        {%if page == 'manage-parties' %}
+        <div>
+            <button class="section-heading-container-active" onclick="location.href='{% url 'manage-parties' %}'">Manage
+                Parties</button>
+        </div>
+        {% else %}
+        <div>
+            <button class="section-heading-container" onclick="location.href='{% url 'manage-parties' %}'">Manage
+                Parties</button>
+        </div>
+        {%endif%}
+
+        {%if page == 'vvl' %}
+        <div>
+            <button class="section-heading-container-active"
+                onclick="location.href='{% url 'voter-verification-list' %}'">Pending Voter Verification</button>
+        </div>
+        {% else %}
+        <div>
+            <button class="section-heading-container"
+                onclick="location.href='{% url 'voter-verification-list' %}'">Pending Voter Verification</button>
+        </div>
+        {%endif%}
+
+        <div>
+            <button class="section-heading-container" onclick="location.href='{% url 'logout' %}'">Logout</button>
+        </div>
+
+    </div>
+
+
+    <div class="section-B">
+        <!--Tables -->
+
+        {% if show_elections %}
+        {% include 'super/manage_elections.html' with elections=elections %}
+        {% endif %}
+
+
+        {% block data %}
+        {% endblock data %}
+    </div>
+</div>
+
+{% endblock content %}

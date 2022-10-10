@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block data %}
+
+<div>
+    <a href="{% url 'create-candidate' election.id%}" class="btn btn-fill">Add New Candidate</a>
+
+    <div style="min-height: 25px;"></div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Party</th>
+            <th>Constituency</th>
+            <th>Actions</th>
+        </tr>
+
+        {%for candidate in candidates %}
+        <tr>
+            <td>{{candidate.name}}</td>
+            <td>{%if candidate.party is None%}
+                Not in Any Party
+                {%else%}
+                <img src="{{candidate.party.party_logo.url}}" width="50" height="50">
+                {{candidate.party.name}}
+                {%endif%}
+            </td>
+            <td>{{candidate.constituency}}</td>
+            <td>
+                <a href="{% url 'edit-candidate' candidate.id election.id %}" class="btn btn-fill">Edit</a> &emsp;
+                <a href="{% url 'delete-candidate' candidate.id election.id %}"
+                    class="btn btn-fill btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+
+{% endblock data %}

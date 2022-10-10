@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div style="margin: 0;">
+    <div style="height: 60px;"></div>
+
+    <div class="heading">Welcome to VoteIndia</div>
+    <!-- <a href="{% url 'temp'%}">Front end</a> -->
+    <div style="min-height: 20px;"></div>
+    <div class="home-discription">A blockhain powered online voting system.</div>
+
+    <div class="features-container">
+        <div class="card feature-card" style="background-image: url('/static/images/blockchain_card.jpg');">
+            <div style="min-height: 250px;"></div>
+            <div class="name-tag">Powered by Blockchain</div>
+            <div class="discription-tag">
+                <p>
+                    VoteIndia uses blockchain technology to store votes which makes it free from manipulations.
+                </p>
+            </div>
+        </div>
+
+        <div class="card feature-card" style="background-image: url('/static/images/easy_access.png');">
+            <div style="min-height: 250px;"></div>
+            <div class="name-tag">Easily Accessible from Anywhere</div>
+            <div class="discription-tag">
+                <p>
+                    Easily vote at from your comfort-zone.
+                </p>
+            </div>
+        </div>
+        <div class="card feature-card" style="background-image: url('/static/images/easy use.jpg');">
+            <div style="min-height: 250px;"></div>
+            <div class="name-tag">Easy to Use and Vote</div>
+            <div class="discription-tag">
+                <p>
+                    Very Easy to use without much of hassle.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="whitespace btn-home-container">
+        <div class="centre-container">
+            <span>
+                <a href="{% url 'voter-login' %}" class="btn btn-fill">Login</a>
+            </span>
+            <span>
+                <a href="{% url 'voter-signup' %}" class="btn btn-border">New User</a>
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock content %}

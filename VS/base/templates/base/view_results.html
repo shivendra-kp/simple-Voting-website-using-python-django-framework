@@ -1,0 +1,122 @@
+{%extends 'base/voter_home.html'%}
+
+{%load customfilter %}
+{%block data%}
+<div>
+    <div>
+        <h2>{{election.name}} results : </h2>
+    </div>
+    <div>
+        <!-- filter form -->
+        <form action="" method="GET">
+            <select name="choice" id="choice" value="">
+                {%if filter == 'party' %}
+                <option value="overall" selected>Overall</option>
+                {%else%}
+                <option value="overall">Overall</option>
+                {%endif%}
+
+                {%if filter == 'region' %}
+                <option value="region" selected>Region</option>
+                {%else%}
+                <option value="region">Region</option>
+                {%endif%}
+
+                {%if filter == 'candidate' %}
+                <option value="candidate" selected>Candidate</option>
+                {%else%}
+                <option value="candidate">Candidate</option>
+                {%endif%}
+
+            </select>
+            <input type="submit" value="Filter" class="btn-fill">
+        </form>
+    </div>
+
+    {%if filter == 'overall'%}
+    <div style="min-height: 30px;"></div>
+    <table class="">
+        <tr>
+            <th>Party-logo</th>
+            <th>Party</th>
+            <th>Seats Won</th>
+            <th>Participated</th>
+            <th>Total Votes</th>
+        </tr>
+
+        {%for res in results%}
+        <tr>
+            <td><img src="{{res.4}}" width="50" height="50"></td>
+            <td>{{res.3}}</td>
+            <td>{{res.1}}</td>
+            <td>{{res.2}}</td>
+            <td>{{res.0}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    {%endif %}
+
+    {%if filter == 'region'%}
+    <div style="min-height: 10px;"></div>
+    {%for res in results%}
+    <div id="election-results-subheading">{{res.0}}, {{res.1}}</div>
+    {% if res.3|length > 0 %}
+    <table>
+        <tr>
+            <th>Party-logo</th>
+            <th>Party</th>
+            <th>Candidate</th>
+            <th>Total Votes</th>
+        </tr>
+        {%for r in res.3%}
+
+        <tr>
+            <td><img src="{{r.1}}" width="50" height="50"></td>
+            <td>{{r.0}}</td>
+            <td class="left-align-text">{{r.3}}</td>
+            <td>{{r.2}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    {%endif %}
+    <div style="padding-top: 75px;"></div>
+    {%endfor%}
+    {%endif %}
+
+
+    {%if filter == 'candidate'%}
+    <div style="min-height: 10px;"></div>
+    {%for res in results%}
+
+    <div style="display:flex; justify-content:start;">
+        <div><img src="{{res.1}}" width="50" height="50"></div>
+        <div id="election-results-subheading">{{res.0}}</div>
+    </div>
+    <div style="min-height: 15px;"></div>
+
+
+
+
+    <table class="results">
+        <tr>
+            <th>Candidate</th>
+            <th>Constituency</th>
+            <th>Votes</th>
+        </tr>
+        {%for r in res.2%}
+        <tr>
+            <td>{{r.0}}</td>
+            <td>{{r.1}}</td>
+            <td>{{r.2}}</td>
+        </tr>
+
+
+        {%endfor%}
+    </table>
+    <div style="padding-top: 75px;"></div>
+
+    {%endfor%}
+    {%endif %}
+</div>
+
+{%endblock data%}

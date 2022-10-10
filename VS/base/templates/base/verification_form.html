@@ -1,0 +1,17 @@
+{% extends 'base/voter_home.html' %}
+
+{% block data %}
+
+
+
+<div>
+    <h1>Verification Form</h1>
+    <form action="" method="POST" class="form-base">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <input type="submit" value="Submit" class="btn btn-fill">
+    </form>
+</div>
+
+{% endblock data %}

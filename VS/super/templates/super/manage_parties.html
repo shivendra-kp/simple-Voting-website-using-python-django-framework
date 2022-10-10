@@ -1,0 +1,35 @@
+{% extends 'super/admin_home.html' %}
+`
+{%load static%}
+
+{% block data %}
+
+<div>
+    <h2>Parties</h2>
+    <button onclick="location.href='{% url 'create-party' %}'" class="btn btn-fill">Add New Party</button>
+    <div style="min-height: 10px;"></div>
+
+    <table>
+        <tr>
+            <th>Party-Logo</th>
+            <th>Party-Name</th>
+            <th>Year-Formed</th>
+            <th>Actions</th>
+        </tr>
+
+        {%for party in parties %}
+        <tr>
+            <td><img src="{{party.party_logo.url}}" width="50" height="50"></td>
+            <td>{{party.name}}</td>
+            <td>{{party.formed}}</td>
+            <td>
+                <a href="{% url 'edit-party' party.id %}" class="btn btn-fill">Edit</a> &emsp;
+                <a href="{% url 'delete-party' party.id %}" class="btn btn-fill btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock data %}
